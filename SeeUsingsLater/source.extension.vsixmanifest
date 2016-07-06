@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+	<Metadata>
+		<Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.0" Language="en-US" Publisher="Nate Hitze" />
+		<DisplayName>SeeUsingsLater</DisplayName>
+		<Description xml:space="preserve">Automatically collapses the "using" regions in a C# document when it is opened.</Description>
+		<Tags>usings</Tags>
+	</Metadata>
+	<Installation>
+		<InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Pro" />
+		<InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Enterprise" />
+		<InstallationTarget Version="[14.0,15.0)" Id="Microsoft.VisualStudio.Community" />
+	</Installation>
+	<Dependencies>
+		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+	</Dependencies>
+	<Assets>
+		<Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+	</Assets>
+</PackageManifest>
