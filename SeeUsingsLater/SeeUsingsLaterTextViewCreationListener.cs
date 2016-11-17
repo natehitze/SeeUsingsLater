@@ -14,20 +14,28 @@ namespace SeeUsingsLater
         [Import]
         internal IOutliningManagerService OutliningManagerService { get; set; }
 
+        private IOutliningManager OutliningManager { get; set; }
+
         public void TextViewCreated(IWpfTextView textView)
         {
-            IOutliningManager outliningManager = OutliningManagerService.GetOutliningManager(textView);
+            if (OutliningManagerService == null || textView == null)
+            {
+                return;
+            }
 
-            outliningManager.RegionsChanged += OnRegionsChanged;
+            OutliningManager = OutliningManagerService.GetOutliningManager(textView);
+
+            if (OutliningManager == null)
+            {
+                return;
+            }
+
+            OutliningManager.RegionsChanged += OnRegionsChanged;
         }
 
         private void OnRegionsChanged(object sender, RegionsChangedEventArgs regionsChangedEventArgs)
         {
-            IOutliningManager outliningManager = sender as IOutliningManager;
-            if (outliningManager != null && outliningManager.Enabled)
-            {
-                outliningManager.CollapseAll(regionsChangedEventArgs.AffectedSpan, Match);
-            }
+            OutliningManager.CollapseAll(regionsChangedEventArgs.AffectedSpan, Match);
         }
 
         private bool Match(ICollapsible collapsible)
