@@ -14,8 +14,6 @@ namespace SeeUsingsLater
         [Import]
         internal IOutliningManagerService OutliningManagerService { get; set; }
 
-        private IOutliningManager OutliningManager { get; set; }
-
         public void TextViewCreated(IWpfTextView textView)
         {
             if (OutliningManagerService == null || textView == null)
@@ -23,26 +21,30 @@ namespace SeeUsingsLater
                 return;
             }
 
-            OutliningManager = OutliningManagerService.GetOutliningManager(textView);
+            IOutliningManager outliningManager = OutliningManagerService.GetOutliningManager(textView);
 
-            if (OutliningManager == null)
+            if (outliningManager == null)
             {
                 return;
             }
 
-            OutliningManager.RegionsChanged += OnRegionsChanged;
+            outliningManager.RegionsChanged += OnRegionsChanged;
         }
 
         private void OnRegionsChanged(object sender, RegionsChangedEventArgs regionsChangedEventArgs)
         {
-            OutliningManager.CollapseAll(regionsChangedEventArgs.AffectedSpan, Match);
+            IOutliningManager outliningManager = sender as IOutliningManager;
+            if (outliningManager != null && outliningManager.Enabled)
+            {
+                outliningManager.CollapseAll(regionsChangedEventArgs.AffectedSpan, Match);
+            }
         }
 
         private bool Match(ICollapsible collapsible)
         {
             string extent = collapsible.CollapsedHintForm.ToString();
             string firstLine = GetFirstLine(extent);
-            
+
             return firstLine != null && Regex.IsMatch(firstLine, "using .*;");
         }
 
