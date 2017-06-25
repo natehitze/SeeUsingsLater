@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.Composition;
 using System.Text.RegularExpressions;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Outlining;
+using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 
 namespace SeeUsingsLater
@@ -13,6 +15,8 @@ namespace SeeUsingsLater
     {
         [Import]
         internal IOutliningManagerService OutliningManagerService { get; set; }
+
+        private IWpfTextView _textView;
 
         public void TextViewCreated(IWpfTextView textView)
         {
@@ -29,6 +33,7 @@ namespace SeeUsingsLater
             }
 
             outliningManager.RegionsChanged += OnRegionsChanged;
+            _textView = textView;
         }
 
         private void OnRegionsChanged(object sender, RegionsChangedEventArgs regionsChangedEventArgs)
@@ -45,7 +50,23 @@ namespace SeeUsingsLater
             string extent = collapsible.CollapsedHintForm.ToString();
             string firstLine = GetFirstLine(extent);
 
-            return firstLine != null && Regex.IsMatch(firstLine, "using .*;");
+            bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
+            if (isUsingRegion)
+            {
+                return !CaretIsInExtent(collapsible.Extent);
+            }
+
+            return false;
+        }
+
+        private bool CaretIsInExtent(ITrackingSpan extent)
+        {
+            ITextSnapshot textSnapshot = _textView.TextSnapshot;
+            int startLine = extent.GetStartPoint(textSnapshot).GetContainingLine().LineNumber;
+            int endLine = extent.GetEndPoint(textSnapshot).GetContainingLine().LineNumber;
+            int caretLine = _textView.Caret.Position.BufferPosition.GetContainingLine().LineNumber;
+
+            return startLine <= caretLine && endLine + 1 >= caretLine;
         }
 
         private string GetFirstLine(string extent)
