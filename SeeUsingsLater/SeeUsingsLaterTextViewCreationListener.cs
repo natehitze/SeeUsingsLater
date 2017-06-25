@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -47,11 +48,11 @@ namespace SeeUsingsLater
 
         private bool Match(ICollapsible collapsible)
         {
-            string extent = collapsible.CollapsedHintForm.ToString();
+            string extent = collapsible?.CollapsedHintForm?.ToString();
             string firstLine = GetFirstLine(extent);
 
             bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
-            if (isUsingRegion)
+            if (isUsingRegion && collapsible?.Extent != null)
             {
                 return !CaretIsInExtent(collapsible.Extent);
             }
