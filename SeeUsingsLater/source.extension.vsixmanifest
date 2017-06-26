@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.3" Language="en-US" Publisher="Nate Hitze" />
+    <Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.4" Language="en-US" Publisher="Nate Hitze" />
     <DisplayName>SeeUsingsLater</DisplayName>
     <Description xml:space="preserve">Simple Visual Studio 2015 and 2017 extension that automatically collapses the using statement regions when a C# code file is opened. When tools make changes to the usings region, it will stay collapsed. Having your caret in the region will prevent it from automatically collapsing.</Description>
     <MoreInfo>https://github.com/laughinggoose/SeeUsingsLater</MoreInfo>

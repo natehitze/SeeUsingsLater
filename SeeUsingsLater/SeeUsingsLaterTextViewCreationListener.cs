@@ -18,6 +18,7 @@ namespace SeeUsingsLater
         internal IOutliningManagerService OutliningManagerService { get; set; }
 
         private IWpfTextView _textView;
+        private bool _firstLoad;
 
         public void TextViewCreated(IWpfTextView textView)
         {
@@ -35,6 +36,7 @@ namespace SeeUsingsLater
 
             outliningManager.RegionsChanged += OnRegionsChanged;
             _textView = textView;
+            _firstLoad = true;
         }
 
         private void OnRegionsChanged(object sender, RegionsChangedEventArgs regionsChangedEventArgs)
@@ -54,7 +56,10 @@ namespace SeeUsingsLater
             bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
             if (isUsingRegion && collapsible?.Extent != null)
             {
-                return !CaretIsInExtent(collapsible.Extent);
+                bool collapse = !CaretIsInExtent(collapsible.Extent) || _firstLoad;
+                _firstLoad = false;
+
+                return collapse;
             }
 
             return false;
