@@ -44,18 +44,21 @@ namespace SeeUsingsLater
             IOutliningManager outliningManager = sender as IOutliningManager;
             if (outliningManager != null && outliningManager.Enabled)
             {
+                // Collapses all of the regions within the span where Match() returns true.
                 outliningManager.CollapseAll(regionsChangedEventArgs.AffectedSpan, Match);
             }
         }
 
+        // Returns true when the collapsible should be collapsed.
         private bool Match(ICollapsible collapsible)
         {
-            string extent = collapsible?.CollapsedHintForm?.ToString();
-            string firstLine = GetFirstLine(extent);
+            string data = collapsible?.CollapsedHintForm?.ToString();
+            string firstLine = GetFirstLine(data);
 
             bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
             if (isUsingRegion && collapsible?.Extent != null)
             {
+                // We only want to collapse if the carent is not within the region or if this is the first load of the document
                 bool collapse = !CaretIsInExtent(collapsible.Extent) || _firstLoad;
                 _firstLoad = false;
 
@@ -65,6 +68,11 @@ namespace SeeUsingsLater
             return false;
         }
 
+        /// <summary>
+        /// Checks if the caret is within the extent by checking if it is on a line between the extent's first line and the line after the extent's last line.
+        /// </summary>
+        /// <param name="extent"></param>
+        /// <returns></returns>
         private bool CaretIsInExtent(ITrackingSpan extent)
         {
             ITextSnapshot textSnapshot = _textView.TextSnapshot;
@@ -75,21 +83,26 @@ namespace SeeUsingsLater
             return startLine <= caretLine && endLine + 1 >= caretLine;
         }
 
-        private string GetFirstLine(string extent)
+        /// <summary>
+        /// Returns the first line within the data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private string GetFirstLine(string data)
         {
-            if (extent == null)
+            if (data == null)
             {
                 return null;
             }
 
-            int index = extent.IndexOf("\n");
+            int index = data.IndexOf("\n");
 
             if (index < 0)
             {
                 return null;
             }
 
-            return extent.Substring(0, index);
+            return data.Substring(0, index);
         }
     }
 }
