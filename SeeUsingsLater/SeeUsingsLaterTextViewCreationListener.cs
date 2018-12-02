@@ -52,8 +52,7 @@ namespace SeeUsingsLater
         // Returns true when the collapsible should be collapsed.
         private bool Match(ICollapsible collapsible)
         {
-            string data = collapsible?.CollapsedHintForm?.ToString();
-            string firstLine = GetFirstLine(data);
+            string firstLine = collapsible?.Extent.GetStartPoint(_textView.TextSnapshot).GetContainingLine().GetText();
 
             bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
             if (isUsingRegion && collapsible?.Extent != null)
