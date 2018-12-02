@@ -81,27 +81,5 @@ namespace SeeUsingsLater
 
             return startLine <= caretLine && endLine + 1 >= caretLine;
         }
-
-        /// <summary>
-        /// Returns the first line within the data
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        private string GetFirstLine(string data)
-        {
-            if (data == null)
-            {
-                return null;
-            }
-
-            int index = data.IndexOf("\n");
-
-            if (index < 0)
-            {
-                return null;
-            }
-
-            return data.Substring(0, index);
-        }
     }
 }
