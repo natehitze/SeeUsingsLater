@@ -1,15 +1,13 @@
-﻿using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using Microsoft.VisualStudio.Text;
+﻿using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Outlining;
-using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
+using System.ComponentModel.Composition;
+using System.Text.RegularExpressions;
 
 namespace SeeUsingsLater
 {
-    [Export(typeof(IWpfTextViewCreationListener))]
+	[Export(typeof(IWpfTextViewCreationListener))]
     [TextViewRole(PredefinedTextViewRoles.Document)]
     [ContentType("CSharp")]
     internal sealed class SeeUsingsLaterTextViewCreationListener : IWpfTextViewCreationListener
@@ -52,13 +50,14 @@ namespace SeeUsingsLater
         // Returns true when the collapsible should be collapsed.
         private bool Match(ICollapsible collapsible)
         {
-            string firstLine = collapsible?.Extent.GetStartPoint(_textView.TextSnapshot).GetContainingLine().GetText();
+            var textSnapshot = collapsible?.Extent.TextBuffer.CurrentSnapshot;
+            string firstLine = collapsible?.Extent.GetStartPoint(textSnapshot).GetContainingLine().GetText();
 
             bool isUsingRegion = firstLine != null && Regex.IsMatch(firstLine, "using .*;");
             if (isUsingRegion && collapsible?.Extent != null)
             {
                 // We only want to collapse if the carent is not within the region or if this is the first load of the document
-                bool collapse = !CaretIsInExtent(collapsible.Extent) || _firstLoad;
+                bool collapse = !CaretIsInExtent(collapsible.Extent, textSnapshot) || _firstLoad;
                 _firstLoad = false;
 
                 return collapse;
@@ -72,9 +71,8 @@ namespace SeeUsingsLater
         /// </summary>
         /// <param name="extent"></param>
         /// <returns></returns>
-        private bool CaretIsInExtent(ITrackingSpan extent)
+        private bool CaretIsInExtent(ITrackingSpan extent, ITextSnapshot textSnapshot)
         {
-            ITextSnapshot textSnapshot = _textView.TextSnapshot;
             int startLine = extent.GetStartPoint(textSnapshot).GetContainingLine().LineNumber;
             int endLine = extent.GetEndPoint(textSnapshot).GetContainingLine().LineNumber;
             int caretLine = _textView.Caret.Position.BufferPosition.GetContainingLine().LineNumber;

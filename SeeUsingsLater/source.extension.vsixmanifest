@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.6" Language="en-US" Publisher="Nate Hitze" />
         <DisplayName>SeeUsingsLater</DisplayName>
-        <Description xml:space="preserve">Simple Visual Studio 2015 and 2017 extension that automatically collapses the using statement regions when a C# code file is opened. When tools make changes to the usings region, it will stay collapsed. Having your caret in the region will prevent it from automatically collapsing.</Description>
+        <Description xml:space="preserve">Automatically collapses the using statement regions when a C# code file is opened. When tools make changes to the usings region, it will stay collapsed. Having your caret in the region will prevent it from automatically collapsing.</Description>
         <MoreInfo>https://github.com/natehitze/SeeUsingsLater</MoreInfo>
         <Icon>SULicon2.PNG</Icon>
         <PreviewImage>SULicon2.PNG</PreviewImage>
