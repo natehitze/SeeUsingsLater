@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="SeeUsingsLater.X64.3c583f08-7e3e-46bc-a4c0-7ab5baa484a4" Version="1.8" Language="en-US" Publisher="Nhitze" />
+        <DisplayName>SeeUsingsLater (x64)</DisplayName>
+        <Description xml:space="preserve">Automatically collapses the using statement regions when a C# code file is opened. When tools make changes to the usings region, it will stay collapsed. Having your caret in the region will prevent it from automatically collapsing.</Description>
+        <MoreInfo>https://github.com/natehitze/SeeUsingsLater</MoreInfo>
+        <Icon>SULicon3.PNG</Icon>
+        <PreviewImage>SULicon3.PNG</PreviewImage>
+        <Tags>usings, hide</Tags>
+        <Preview>true</Preview>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[17.0,18.0)" DisplayName="C# and Visual Basic" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,18.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.ManagedDesktop.Core" Version="[17.0,18.0)" DisplayName="Managed Desktop Workload Core" />
+    </Prerequisites>
+    <Assets>
+        <!--<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />-->
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
+</PackageManifest>

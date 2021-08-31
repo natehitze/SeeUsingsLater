@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.7" Language="en-US" Publisher="Nate Hitze" />
+        <Identity Id="SeeUsingsLater.Nhitze.c8342009-75cc-4c1b-8d49-74a1403b9716" Version="1.8" Language="en-US" Publisher="Nhitze" />
         <DisplayName>SeeUsingsLater</DisplayName>
         <Description xml:space="preserve">Automatically collapses the using statement regions when a C# code file is opened. When tools make changes to the usings region, it will stay collapsed. Having your caret in the region will prevent it from automatically collapsing.</Description>
         <MoreInfo>https://github.com/natehitze/SeeUsingsLater</MoreInfo>
-        <Icon>SULicon2.PNG</Icon>
-        <PreviewImage>SULicon2.PNG</PreviewImage>
+        <Icon>SULicon3.PNG</Icon>
+        <PreviewImage>SULicon3.PNG</PreviewImage>
         <Tags>usings, hide</Tags>
     </Metadata>
     <Installation>
